@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Consumption Trends Dashboard - Malaysia</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="loader.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#0891b2',
+                        accent: '#ea580c',
+                        success: '#059669',
+                        warning: '#d97706',
+                        neutral: '#374151',
+                        background: '#f8fafc'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #0891b2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            opacity: 0.6;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #1e40af;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Cursor for Typewriter */
+        .typed-cursor {
+            font-size: 1em;
+            color: #ea580c;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <style>
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+            z-index: 3;
+        }
+
+        .wave-container svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 100px;
+        }
+
+        .shape-fill {
+            fill: #f8fafc;
+        }
+
+        /* Tilt Effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.1s ease;
+        }
+
+        .tilt-inner {
+            transform: translateZ(20px);
+        }
+    </style>
+</head>
+
+<body class="bg-background font-sans">
+
+    <nav class="bg-white/95 backdrop-blur-md shadow-sm fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h1 class="text-xl font-bold text-neutral">Airlytics</h1>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html"
+                        class="text-neutral hover:text-primary transition-colors nav-link">Home</a>
+                    <a href="trends.html" class="text-neutral hover:text-primary transition-colors nav-link">Trends</a>
+                    <a href="prediction.html"
+                        class="text-neutral hover:text-primary transition-colors nav-link">Prediction</a>
+                    <a href="insights.html"
+                        class="text-neutral hover:text-primary transition-colors nav-link">Insights</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-16 relative">
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
+        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+
+            <div class="inline-block mb-6 opacity-0 translate-y-4" id="greetingBadge">
+                <span
+                    class="py-1 px-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-sm font-medium">
+                    <span id="timeGreeting">Hello</span>, Welcome back
+                </span>
+            </div>
+
+            <div class="space-y-6">
+                <h1
+                    class="text-5xl md:text-7xl font-bold tracking-tight h-[160px] md:h-[120px] flex items-center justify-center">
+                    <span id="typewriter"></span>
+                </h1>
+
+                <p class="text-xl md:text-2xl max-w-2xl mx-auto text-blue-100 opacity-0 translate-y-4"
+                    id="heroSubtitle">
+                    Explore Malaysia's water consumption trends from 2015 and unlock future predictions through 2029
+                </p>
+            </div>
+        </div>
+
+        <a href="#quick-nav"
+            class="absolute bottom-24 left-1/2 transform -translate-x-1/2 animate-bounce opacity-70 hover:opacity-100 transition-opacity z-10">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </a>
+    
+
+        <div class="wave-container">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section id="quick-nav" class="py-12 bg-gray-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-neutral">Analytics Modules</h2>
+                <p class="text-gray-500">Select a module to begin your analysis</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <a href="trends.html"
+                    class="tilt-card group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100 hover:border-primary/50 block">
+                    <div
+                        class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                        <svg class="w-6 h-6 text-primary group-hover:text-white" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral group-hover:text-primary">Trend Analysis</h3>
+                    <p class="text-sm text-gray-500 mt-2">Visualize consumption growth over time with interactive line
+                        and bar charts.</p>
+                </a>
+                <a href="prediction.html"
+                    class="tilt-card group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100 hover:border-secondary/50 block">
+                    <div
+                        class="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors">
+                        <svg class="w-6 h-6 text-secondary group-hover:text-white" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral group-hover:text-secondary">Strategy & Prediction</h3>
+                    <p class="text-sm text-gray-500 mt-2">Strategic insights based on predictive models.</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-neutral text-white py-12 border-t border-gray-700 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <h3 class="text-xl font-bold">Airlytics</h3>
+                <p class="text-sm text-gray-400 mt-1">Data Source: Department of Statistics Malaysia (DOSM)</p>
+            </div>
+            <div class="flex space-x-6 text-sm text-gray-300">
+                <a href="index.html" class="hover:text-white">Home</a>
+                <a href="trends.html" class="hover:text-white">Trends</a>
+                <a href="prediction.html" class="hover:text-white">Prediction</a>
+                <a href="insights.html" class="hover:text-white">Insights</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Time-Based Greeting Logic
+            const hour = new Date().getHours();
+            const greetingElement = document.getElementById('timeGreeting');
+            let greetingText = 'Good Morning';
+
+            if (hour >= 12 && hour < 18) {
+                greetingText = 'Good Afternoon';
+            } else if (hour >= 18) {
+                greetingText = 'Good Evening';
+            }
+            greetingElement.textContent = greetingText;
+
+            // 2. Typed.js Initialization
+            new Typed('#typewriter', {
+                strings: [
+                    'Welcome to Airlytics.',
+                    'Tracking Malaysia\'s Consumption.',
+                    'Data for a Sustainable Future.'
+                ],
+                typeSpeed: 40,
+                backSpeed: 20,
+                startDelay: 500,
+                backDelay: 2000,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|'
+            });
+
+            // 3. Entrance Animations
+            const tl = anime.timeline({
+                easing: 'easeOutExpo',
+                duration: 1000
+            });
+
+            tl.add({
+                targets: '#greetingBadge',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                delay: 200
+            })
+                .add({
+                    targets: '#heroSubtitle',
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                }, '-=600')
+                .add({
+                    targets: '#heroButtons',
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                }, '-=800');
+
+            // 4. Particle Background Logic (Bubbles)
+            initParticles();
+
+            // 5. Counter Animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        const duration = 2000;
+                        const startTime = performance.now();
+                        const element = entry.target;
+
+                        function update(currentTime) {
+                            const elapsed = currentTime - startTime;
+                            const progress = Math.min(elapsed / duration, 1);
+
+                            // Ease out circ function
+                            const ease = 1 - Math.pow(1 - progress, 3);
+
+                            element.textContent = Math.floor(ease * target);
+
+                            if (progress < 1) {
+                                requestAnimationFrame(update);
+                            } else {
+                                element.textContent = target; // Ensure final value
+                            }
+                        }
+
+                        requestAnimationFrame(update);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.count-up').forEach(el => observer.observe(el));
+
+            // 6. Tilt Effect Logic
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+                });
+            });
+
+            // 7. Ripple Effect
+            document.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.className = 'ripple';
+
+                const size = 20;
+                ripple.style.width = `${size}px`;
+                ripple.style.height = `${size}px`;
+                ripple.style.left = `${e.clientX - size / 2}px`;
+                ripple.style.top = `${e.clientY - size / 2}px`; // Fixed: use clientY for viewport absolute pos
+
+                document.body.appendChild(ripple);
+
+                ripple.addEventListener('animationend', () => {
+                    ripple.remove();
+                });
+            });
+        });
+
+        // Bubble Particle System
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            class Bubble {
+                constructor() {
+                    this.init();
+                }
+
+                init() {
+                    this.x = Math.random() * width;
+                    this.y = height + Math.random() * 100; // Start below screen
+                    this.radius = Math.random() * 5 + 2; // Size 2-7
+                    this.speed = Math.random() * 1 + 0.5;
+                    this.wobble = Math.random() * Math.PI * 2;
+                    this.wobbleSpeed = Math.random() * 0.05;
+                    this.opacity = Math.random() * 0.5 + 0.1;
+                }
+
+                update() {
+                    this.y -= this.speed;
+                    this.x += Math.sin(this.wobble) * 0.5;
+                    this.wobble += this.wobbleSpeed;
+
+                    // Reset if above screen
+                    if (this.y < -50) {
+                        this.init();
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                    ctx.fill();
+
+                    // Simple shine effect
+                    ctx.beginPath();
+                    ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.2, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity + 0.3})`;
+                    ctx.fill();
+                }
+            }
+
+            function init() {
+                particles = [];
+                for (let i = 0; i < 50; i++) {
+                    particles.push(new Bubble());
+                }
+                // Pre-warm the system so bubbles are already on screen
+                for (let i = 0; i < 1000; i++) {
+                    particles.forEach(p => p.update());
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                init();
+            });
+
+            resize();
+            init();
+            animate();
+        }
+    </script>
+    <script src="loader.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trend Analysis - Water Consumption Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="loader.css">
+    <link rel="stylesheet" href="particles.css">
+
+    <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#0891b2',
+                        accent: '#ea580c',
+                        success: '#059669',
+                        warning: '#d97706',
+                        neutral: '#374151',
+                        background: '#f8fafc'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Common style for all Viz containers */
+        .tableau-container {
+            width: 100%;
+            min-height: 800px;
+            /* Increased slightly for better visibility */
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #1e40af, #0891b2);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.3);
+        }
+
+        /* Nav Link Animation */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #1e40af;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #0891b2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+            z-index: 3;
+        }
+
+        .wave-container svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+
+        .shape-fill {
+            fill: #f8fafc;
+        }
+    </style>
+</head>
+
+<body class="bg-background font-sans">
+
+    <nav class="bg-white/95 backdrop-blur-md shadow-sm fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center gap-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h1 class="text-xl font-bold text-neutral">Airlytics</h1>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-neutral hover:text-primary transition-colors nav-link">Home</a>
+                    <a href="trends.html" class="text-primary font-medium">Trends</a>
+                    <a href="prediction.html"
+                        class="text-neutral hover:text-primary transition-colors nav-link">Prediction</a>
+                    <a href="insights.html"
+                        class="text-neutral hover:text-primary transition-colors nav-link">Insights</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-bg pt-24 pb-20 text-white relative">
+        <canvas id="particleCanvas" class="particle-canvas" data-container=".hero-bg"></canvas>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Trend Analysis</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Explore comprehensive water consumption data through interactive maps, bar charts, and historical
+                    trend lines.
+                </p>
+            </div>
+        </div>
+
+        <div class="wave-container">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="py-8 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Tabs Navigation -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="switchTab('map')" id="tab-map"
+                    class="tab-button active px-6 py-3 rounded-full bg-white text-neutral font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2 border border-gray-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
+                        </path>
+                    </svg>
+                    Geographic Overview
+                </button>
+                <button onclick="switchTab('bar')" id="tab-bar"
+                    class="tab-button px-6 py-3 rounded-full bg-white text-neutral font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2 border border-gray-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    Consumption Analysis (Bar)
+                </button>
+                <button onclick="switchTab('line')" id="tab-line"
+                    class="tab-button px-6 py-3 rounded-full bg-white text-neutral font-medium shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-2 border border-gray-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                    Historical Trends (Line)
+                </button>
+            </div>
+
+            <!-- VIZ 1: Map -->
+            <div id="container-map"
+                class="viz-container glass-card p-1 rounded-xl shadow-lg transition-all duration-500">
+                <div
+                    class="h-1 bg-gray-100 rounded-t-xl overflow-hidden loading-line absolute top-0 left-0 right-0 z-10">
+                    <div class="h-full bg-primary animate-progress origin-left"></div>
+                </div>
+                <div id="tableauVizMap" class="tableau-container"></div>
+            </div>
+
+            <!-- VIZ 2: Bar -->
+            <div id="container-bar"
+                class="viz-container glass-card p-1 rounded-xl shadow-lg transition-all duration-500 hidden opacity-0">
+                <div
+                    class="h-1 bg-gray-100 rounded-t-xl overflow-hidden loading-line absolute top-0 left-0 right-0 z-10">
+                    <div class="h-full bg-primary animate-progress origin-left"></div>
+                </div>
+                <div id="tableauVizBar" class="tableau-container"></div>
+            </div>
+
+            <!-- VIZ 3: Line -->
+            <div id="container-line"
+                class="viz-container glass-card p-1 rounded-xl shadow-lg transition-all duration-500 hidden opacity-0">
+                <div
+                    class="h-1 bg-gray-100 rounded-t-xl overflow-hidden loading-line absolute top-0 left-0 right-0 z-10">
+                    <div class="h-full bg-primary animate-progress origin-left"></div>
+                </div>
+                <div id="tableauVizLine" class="tableau-container"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4 text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-neutral mb-2">Interactive Navigation</h4>
+                    <p class="text-sm text-gray-600">Use the tabs above to switch between different analytical views.
+                        Each view provides a unique perspective on the storage and consumption data.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center mb-4 text-secondary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-neutral mb-2">Filtering & Details</h4>
+                    <p class="text-sm text-gray-600">Click on states, bars, or lines within the dashboards to filter the
+                        data. Tooltips provide specific values on hover.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 text-success">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-neutral mb-2">Data Sources</h4>
+                    <p class="text-sm text-gray-600">Verified data sourced directly from Department of Statistics
+                        Malaysia (DOSM) and Suruhanjaya Perkhidmatan Air Negara (SPAN).</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-neutral text-white py-12 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-xl font-bold mb-2">Airlytics</h3>
+            <p class="text-sm text-gray-400">Powered by Tableau & DOSM Data & SPAN</p>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        var vizMap, vizBar, vizLine;
+
+        // Configuration
+        const commonOptions = {
+            hideTabs: false,
+            hideToolbar: true, // Hiding toolbar for cleaner look
+            width: "100%",
+            height: "850px",
+            device: "desktop",
+            onFirstInteractive: function (e) {
+                // Remove loading line when loaded
+                const vizFrames = document.querySelectorAll('.viz-container');
+                vizFrames.forEach(fram => {
+                    const loader = fram.querySelector('.loading-line');
+                    if (loader) loader.style.display = 'none';
+                });
+            }
+        };
+
+        function initTableau() {
+            // 1. Map Viz (Shared Link)
+            // https://public.tableau.com/shared/K429N84NN?:display_count=n&:origin=viz_share_link
+            var containerMap = document.getElementById("tableauVizMap");
+            var urlMap = "https://public.tableau.com/shared/K429N84NN?:display_count=n&:origin=viz_share_link";
+            vizMap = new tableau.Viz(containerMap, urlMap, commonOptions);
+
+            // 2. Bar Viz (Dashboard3)
+            // https://public.tableau.com/views/FYPBar/Dashboard3?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+            var containerBar = document.getElementById("tableauVizBar");
+            var urlBar = "https://public.tableau.com/views/FYPBar/Dashboard3?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link";
+            vizBar = new tableau.Viz(containerBar, urlBar, commonOptions);
+
+            // 3. Line Viz (Dashboard4)
+            // https://public.tableau.com/views/FYPLine/Dashboard4?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+            var containerLine = document.getElementById("tableauVizLine");
+            var urlLine = "https://public.tableau.com/views/FYPLine/Dashboard4?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link";
+            vizLine = new tableau.Viz(containerLine, urlLine, commonOptions);
+        }
+
+        function switchTab(tabName) {
+            // Updated Logic for Smooth Transitions
+
+            // 1. Update Buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('bg-white', 'text-neutral');
+            });
+            const activeBtn = document.getElementById('tab-' + tabName);
+            activeBtn.classList.add('active'); // active class handles the gradient background from CSS
+            activeBtn.classList.remove('bg-white', 'text-neutral');
+
+            // 2. Handle Containers
+            document.querySelectorAll('.viz-container').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+                el.classList.add('opacity-0');
+            });
+
+            const activeContainer = document.getElementById('container-' + tabName);
+            activeContainer.classList.remove('hidden');
+
+            // Small timeout to allow display:block to apply before changing opacity for transition
+            setTimeout(() => {
+                activeContainer.classList.remove('opacity-0');
+            }, 50);
+
+            // Optional: Resize adjustment if Tableau renders weirdly when hidden
+            // if (tabName === 'bar' && vizBar) vizBar.setFrameSize("100%", "850px");
+            // if (tabName === 'line' && vizLine) vizLine.setFrameSize("100%", "850px");
+            // if (tabName === 'map' && vizMap) vizMap.setFrameSize("100%", "850px");
+        }
+
+        document.addEventListener("DOMContentLoaded", initTableau);
+    </script>
+    <script src="loader.js"></script>
+    <script src="particles.js"></script>
+</body>
+
+</html>
