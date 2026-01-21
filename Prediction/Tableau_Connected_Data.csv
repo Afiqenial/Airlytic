@@ -551,8 +551,8 @@ Sabah,2026,428.13,Prediction,Final Ensemble (Best)
 Sabah,2027,432.63,Prediction,Final Ensemble (Best)
 Sabah,2028,435.56,Prediction,Final Ensemble (Best)
 Sabah,2029,441.12,Prediction,Final Ensemble (Best)
-Sabah,2023,411.84901392207325,Historical (Filled),Gap Fill
-Sabah,2024,411.2205339394038,Historical (Filled),Gap Fill
+Sabah,2023,411.8490137888018,Historical (Filled),Gap Fill
+Sabah,2024,411.2205339401101,Historical (Filled),Gap Fill
 Sabah,2025,434.48,Prediction,Hybrid (Volatile)
 Sabah,2026,443.81,Prediction,Hybrid (Volatile)
 Sabah,2027,452.08,Prediction,Hybrid (Volatile)
@@ -574,10 +574,10 @@ Sabah,2027,425.2799987792969,Prediction,XGBoost (Gradient Boosting)
 Sabah,2028,436.4700012207031,Prediction,XGBoost (Gradient Boosting)
 Sabah,2029,458.5299987792969,Prediction,XGBoost (Gradient Boosting)
 Sarawak,2025,609.0,Prediction,ARIMA (Momentum)
-Sarawak,2026,622.32,Prediction,ARIMA (Momentum)
-Sarawak,2027,635.64,Prediction,ARIMA (Momentum)
-Sarawak,2028,648.97,Prediction,ARIMA (Momentum)
-Sarawak,2029,662.29,Prediction,ARIMA (Momentum)
+Sarawak,2026,622.33,Prediction,ARIMA (Momentum)
+Sarawak,2027,635.65,Prediction,ARIMA (Momentum)
+Sarawak,2028,648.98,Prediction,ARIMA (Momentum)
+Sarawak,2029,662.31,Prediction,ARIMA (Momentum)
 Sarawak,2003,289.0,Historical,Actual
 Sarawak,2004,336.0,Historical,Actual
 Sarawak,2005,327.0,Historical,Actual
@@ -602,9 +602,9 @@ Sarawak,2025,590.12,Prediction,Final Ensemble (Best)
 Sarawak,2026,601.34,Prediction,Final Ensemble (Best)
 Sarawak,2027,612.66,Prediction,Final Ensemble (Best)
 Sarawak,2028,624.15,Prediction,Final Ensemble (Best)
-Sarawak,2029,639.15,Prediction,Final Ensemble (Best)
-Sarawak,2023,587.8857223559723,Historical (Filled),Gap Fill
-Sarawak,2024,595.6712668048528,Historical (Filled),Gap Fill
+Sarawak,2029,639.16,Prediction,Final Ensemble (Best)
+Sarawak,2023,587.8873604667169,Historical (Filled),Gap Fill
+Sarawak,2024,595.6745461785829,Historical (Filled),Gap Fill
 Sarawak,2025,571.24,Prediction,Hybrid (Volatile)
 Sarawak,2026,580.36,Prediction,Hybrid (Volatile)
 Sarawak,2027,589.67,Prediction,Hybrid (Volatile)
