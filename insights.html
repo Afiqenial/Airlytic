@@ -148,6 +148,29 @@
                         class="text-neutral hover:text-primary transition-colors nav-link">Prediction</a>
                     <a href="insights.html" class="text-primary font-medium">Insights</a>
                 </div>
+                <div class="flex items-center md:hidden">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" type="button"
+                        class="text-gray-500 hover:text-primary focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Home</a>
+                <a href="trends.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Trends</a>
+                <a href="prediction.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Prediction</a>
+                <a href="insights.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Insights</a>
             </div>
         </div>
     </nav>
@@ -205,92 +228,141 @@
 
             <!-- Tab Content: Domestic -->
             <div id="content-domestic" class="tab-content transition-all duration-500 opacity-100 translate-y-0">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    <!-- Left: Interactive House Visual -->
-                    <div
-                        class="bg-blue-50 rounded-2xl p-8 relative overflow-hidden group hover:shadow-xl transition-all duration-300">
-                        <div class="absolute top-0 right-0 p-4 opacity-50 group-hover:opacity-100 transition-opacity">
-                            <svg class="w-32 h-32 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
-                                <path opacity=".3" d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-neutral mb-6 relative z-10">Smart Home Checklist</h3>
-                        <div class="space-y-4 relative z-10">
+                <div class="space-y-8">
+                    <!-- Section 1: Consumption & Targets -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Consumption Trends Card -->
+                        <div
+                            class="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg relative overflow-hidden group">
                             <div
-                                class="flex items-center p-4 bg-white rounded-xl shadow-sm hover:translate-x-2 transition-transform cursor-pointer">
+                                class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <svg class="w-20 h-20 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-neutral mb-2">The 160 LCD Challenge</h3>
+                            <p class="text-sm text-gray-500 mb-6">Reducing daily water usage per person.</p>
+
+                            <div class="space-y-6 relative z-10">
+                                <!-- Malaysia Current -->
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-bold text-neutral">Malaysia Current</span>
+                                        <span class="text-red-500 font-bold">228 Liters</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 rounded-full h-3">
+                                        <div class="bg-red-500 h-3 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-400 mt-1">High usage in Selangor/KL (up to 241L).</p>
+                                </div>
+
+                                <!-- Target -->
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-bold text-success">National Target (2030)</span>
+                                        <span class="text-success font-bold">160 Liters</span>
+                                    </div>
+                                    <div class="w-full bg-gray-100 rounded-full h-3">
+                                        <div class="bg-success h-3 rounded-full" style="width: 70%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Comparison -->
+                                <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                                    <p class="text-xs text-blue-800 font-medium mb-3">Regional & Global Comparison
+                                        (Liters/Day):</p>
+                                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                                        <div class="flex items-center gap-2">
+                                            <span>🇸🇬</span> <span>Singapore: <strong>~151 L</strong></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span>🇹🇭</span> <span>Thailand: <strong>~193 L</strong></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span>🇻🇳</span> <span>Vietnam: <strong>~110 L</strong></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span>🇬🇧</span> <span>UK: <strong>~149 L</strong></span>
+                                        </div>
+                                    </div>
+                                    <p class="text-[10px] text-gray-400 mt-2 text-right">Targeting 160 L/Day puts us on
+                                        par with developed nations.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Impact Stats -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div
+                                class="bg-gradient-to-br from-primary to-blue-600 rounded-2xl p-6 text-white shadow-lg transform hover:-translate-y-1 transition-transform">
+                                <div class="text-4xl font-bold mb-2">35%</div>
+                                <p class="text-sm opacity-90">Potential bill reduction by using water-efficient
+                                    appliances.</p>
+                                <p class="text-[10px] text-white/70 mt-2">Source: Smart Home Checklist</p>
+                            </div>
+                            <div
+                                class="bg-white rounded-2xl p-6 border border-gray-100 shadow-md transform hover:-translate-y-1 transition-transform relative overflow-hidden">
+                                <div class="absolute -right-4 -bottom-4 opacity-10">
+                                    <svg class="w-24 h-24 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
+                                    </svg>
+                                </div>
+                                <div class="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Pro Tip</div>
+                                <h4 class="font-bold text-lg mb-2">Water Thimbles</h4>
+                                <p class="text-sm text-gray-600 mb-4">Simple flow restrictors can cut tap flow from 15L
+                                    to 6L/min without affecting pressure.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Smart Home & Tech -->
+                    <div class="bg-blue-50 rounded-2xl p-8 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-full bg-grid-slate-100/[0.05] -z-1"></div>
+                        <h3 class="text-2xl font-bold text-neutral mb-8 relative z-10">Smart Home Checklist</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                            <!-- WEPLS -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-600 mr-4">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-4">
+                                    <span class="text-xl font-bold">★</span>
+                                </div>
+                                <h4 class="font-bold text-gray-800 mb-2">Check the Label (WEPLS)</h4>
+                                <p class="text-sm text-gray-600">Look for 3-star rated products. A 3-star toilet uses
+                                    ~3L/flush vs 9L for older models.</p>
+                            </div>
+
+                            <!-- Leak Detection -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 mb-4">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
                                         </path>
                                     </svg>
                                 </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">Leak Detection</h4>
-                                    <p class="text-xs text-gray-500">Check faucets & toilets monthly. Saves ~15L/day
-                                        <span class="text-[10px] text-gray-400 block">(Source: SPAN Handbook)</span>.
-                                    </p>
-                                </div>
+                                <h4 class="font-bold text-gray-800 mb-2">Leak Patrol</h4>
+                                <p class="text-sm text-gray-600">Check faucets & toilets monthly. A silent leak can
+                                    waste 15L/day.</p>
                             </div>
-                            <div
-                                class="flex items-center p-4 bg-white rounded-xl shadow-sm hover:translate-x-2 transition-transform cursor-pointer">
+
+                            <!-- Rainwater Harvesting -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-4">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">High-Efficiency Appliances</h4>
-                                    <p class="text-xs text-gray-500 mb-1">Use 5-star WELS rated washing machines.</p>
-                                    <p class="text-[10px] text-gray-400">Saves up to 50% water per wash (SPAN WELS).</p>
-                                </div>
-                            </div>
-                            <div
-                                class="flex items-center p-4 bg-white rounded-xl shadow-sm hover:translate-x-2 transition-transform cursor-pointer">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3">
+                                            d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z">
                                         </path>
                                     </svg>
                                 </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-800">Greywater Recycling</h4>
-                                    <p class="text-xs text-gray-500">Reuse laundry water for gardening.</p>
-                                </div>
+                                <h4 class="font-bold text-gray-800 mb-2">Harvest Rain (SPAH)</h4>
+                                <p class="text-sm text-gray-600">Mandatory for bungalows >100m². Use rainwater for
+                                    washing cars & gardening.</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Right: Impact Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div
-                            class="bg-gradient-to-br from-primary to-blue-600 rounded-2xl p-6 text-white shadow-lg transform hover:-translate-y-1 transition-transform">
-                            <div class="text-4xl font-bold mb-2">35%</div>
-                            <p class="text-sm opacity-90">Potential bill reduction by fixing household leaks and
-                                optimizing usage.</p>
-                            <p class="text-[10px] text-white/70 mt-2">Source: EPA WaterSense / SPAN Guidelines</p>
-                        </div>
-                        <div
-                            class="bg-white rounded-2xl p-6 border border-gray-100 shadow-md transform hover:-translate-y-1 transition-transform">
-                            <div class="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Community</div>
-                            <h4 class="font-bold text-lg mb-2">Report Issues</h4>
-                            <p class="text-sm text-gray-600 mb-4">Spot a pipe burst? Report it to your local provider
-                                immediately.</p>
-                            <a href="#directory" class="text-primary text-sm font-bold hover:underline">Find Number
-                                →</a>
-                        </div>
-                        <div class="bg-gray-50 rounded-2xl p-6 col-span-1 sm:col-span-2 border-l-4 border-yellow-400">
-                            <h4 class="font-bold text-gray-800 mb-1">Did you know?</h4>
-                            <p class="text-sm text-gray-600 mb-1">A running tap wastes 6 liters of water per minute.
-                                Turning
-                                it off while brushing teeth saves 8,000 liters a year!</p>
-                            <p class="text-[10px] text-gray-400">Source: Waterwise / WHO</p>
                         </div>
                     </div>
                 </div>
@@ -298,21 +370,70 @@
 
             <!-- Tab Content: National -->
             <div id="content-national" class="tab-content hidden opacity-0 translate-y-4 transition-all duration-500">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Strategy Card 1 -->
-                    <div
-                        class="col-span-1 md:col-span-2 bg-neutral rounded-2xl p-8 text-white relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-16 -mt-16">
+                <div class="space-y-8">
+
+                    <!-- WST2040 Hero Card -->
+                    <div class="bg-neutral rounded-2xl p-8 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32">
                         </div>
-                        <div class="relative z-10">
+                        <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <span
+                                    class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-medium mb-4">Strategic
+                                    Anchor</span>
+                                <h3 class="text-3xl font-bold mb-4">Water Sector Transformation 2040 (WST2040)</h3>
+                                <p class="text-gray-300 mb-6">A paradigm shift from viewing water as a subsidized
+                                    utility to a <span class="text-white font-bold">Dynamic Economic Sector</span>. By
+                                    2040, Malaysia aims to be a Regional Water Hub, contributing directly to GDP.</p>
+                                <div class="flex gap-4">
+                                    <div class="bg-white/5 p-4 rounded-lg backdrop-blur-sm border border-white/10">
+                                        <div class="text-2xl font-bold text-secondary mb-1">8 Drivers</div>
+                                        <div class="text-xs text-gray-400">Of Transformation</div>
+                                    </div>
+                                    <div class="bg-white/5 p-4 rounded-lg backdrop-blur-sm border border-white/10">
+                                        <div class="text-2xl font-bold text-secondary mb-1">GDP</div>
+                                        <div class="text-xs text-gray-400">Contributor</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white/10 p-4 rounded-xl">
+                                    <h4 class="font-bold mb-1 text-sm">IWSDC</h4>
+                                    <p class="text-xs text-gray-400">Centralized "Big Data" for precision management.
+                                    </p>
+                                </div>
+                                <div class="bg-white/10 p-4 rounded-xl">
+                                    <h4 class="font-bold mb-1 text-sm">WFE Nexus</h4>
+                                    <p class="text-xs text-gray-400">Integrating Water, Food & Energy security.</p>
+                                </div>
+                                <div class="bg-white/10 p-4 rounded-xl">
+                                    <h4 class="font-bold mb-1 text-sm">Alt. Finance</h4>
+                                    <p class="text-xs text-gray-400">Moving to "Bankable" projects & private investment.
+                                    </p>
+                                </div>
+                                <div class="bg-white/10 p-4 rounded-xl">
+                                    <h4 class="font-bold mb-1 text-sm">IR 4.0</h4>
+                                    <p class="text-xs text-gray-400">Digital Twins & Smart Grids.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategic Pillars Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        <!-- 1. NRW Reduction (Updated with Tooltip) -->
+                        <div
+                            class="col-span-1 md:col-span-2 bg-white border border-gray-200 rounded-2xl p-8 relative overflow-hidden group hover:border-primary transition-all">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
-                                    <h3 class="text-2xl font-bold mb-2">Non-Revenue Water (NRW) Reduction</h3>
-                                    <p class="text-gray-400 text-sm">Target: Reduce national NRW to 25% by 2030 <span
-                                            class="text-xs text-gray-500 ml-1">(Source: 12MP)</span></p>
+                                    <h3
+                                        class="text-2xl font-bold text-neutral mb-2 group-hover:text-primary transition-colors">
+                                        The NRW Battle</h3>
+                                    <p class="text-gray-500 text-sm">Target: Reduce Non-Revenue Water to 25% by 2030</p>
                                 </div>
-                                <div class="bg-white/10 p-2 rounded-lg">
-                                    <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor"
+                                <div class="bg-red-50 p-2 rounded-lg group-hover:bg-red-100 transition-colors">
+                                    <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
@@ -320,99 +441,159 @@
                                 </div>
                             </div>
 
-                            <!-- Animated Progress Bar -->
-                            <div class="mb-2 flex justify-between text-xs text-gray-400">
-                                <span>Current Avg (~35%) <span class="text-[10px] block text-gray-500">Source: SPAN
-                                        2024</span></span>
-                                <span>Target (25%)</span>
-                            </div>
-                            <div class="w-full bg-gray-700 rounded-full h-4 mb-6 relative">
-                                <div class="bg-gradient-to-r from-red-500 to-yellow-500 h-4 rounded-full"
-                                    style="width: 35%;"></div>
+                            <!-- Stat Bar -->
+                            <div class="mb-6 relative group/bar">
+                                <div class="flex justify-between text-xs text-gray-500 mb-2">
+                                    <span>Current: 37.2% (National Avg)</span>
+                                    <span>Goal: 25%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-4 relative overflow-hidden">
+                                    <div class="bg-gradient-to-r from-red-500 to-orange-400 h-4 rounded-full relative"
+                                        style="width: 37.2%">
+                                        <div class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite]"></div>
+                                    </div>
+                                    <div
+                                        class="absolute top-0 right-[75%] w-0.5 h-6 bg-green-500 -mt-1 shadow-[0_0_10px_#22c55e] z-10">
+                                    </div>
+                                </div>
+                                <!-- Tooltip -->
                                 <div
-                                    class="absolute top-0 left-[25%] w-0.5 h-6 bg-green-500 -mt-1 shadow-[0_0_10px_#22c55e]">
+                                    class="absolute left-1/3 -top-10 -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-3 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none">
+                                    35% is ~2 billion liters lost daily!
+                                    <div
+                                        class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full border-4 border-transparent border-t-gray-800">
+                                    </div>
                                 </div>
                             </div>
-                            <p class="text-sm text-gray-300 leading-relaxed">
-                                Replacing aging asbestos-cement pipes with HDPE and implementing smart pressure
-                                management systems to minimize physical losses.
-                            </p>
-                        </div>
-                    </div>
 
-                    <!-- Strategy Card 2 -->
-                    <div
-                        class="bg-white border border-gray-200 rounded-2xl p-6 hover:border-primary transition-colors cursor-default group">
-                        <div
-                            class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center text-sky-600 mb-4 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
-                                </path>
-                            </svg>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-100">
+                                <div class="group/item hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                                    <h4 class="font-bold text-gray-800 text-sm mb-1">Pipe Replacement</h4>
+                                    <p class="text-xs text-gray-500">Replacing brittle Asbestos-Cement (AC) pipes with
+                                        durable HDPE.</p>
+                                </div>
+                                <div class="group/item hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                                    <h4 class="font-bold text-gray-800 text-sm mb-1">Digital Twins</h4>
+                                    <p class="text-xs text-gray-500">Using AI & Sensors to detect leaks before they
+                                        burst (Active Leakage Control).</p>
+                                </div>
+                            </div>
                         </div>
-                        <h4 class="font-bold text-neutral text-lg mb-2">Alternative Sources</h4>
-                        <p class="text-sm text-gray-600">
-                            Reducing river dependency by exploring groundwater, off-river storage (ORS), and large-scale
-                            rainwater harvesting.
-                        </p>
-                    </div>
 
-                    <!-- Strategy Card 3 -->
-                    <div
-                        class="bg-white border border-gray-200 rounded-2xl p-6 hover:border-primary transition-colors cursor-default group">
-                        <div
-                            class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 mb-4 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                </path>
-                            </svg>
+                        <!-- 2. Supply Security (New) -->
+                        <div class="bg-sky-50 rounded-2xl p-6 border border-sky-100 flex flex-col justify-between">
+                            <div>
+                                <div
+                                    class="w-12 h-12 bg-sky-200 rounded-xl flex items-center justify-center text-sky-700 mb-4">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h4 class="font-bold text-neutral text-lg mb-2">Supply Resilience</h4>
+                                <ul class="space-y-3 text-sm text-gray-600">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-sky-600 mt-1">●</span>
+                                        <span><strong>TAPS:</strong> Off-River Storage to mitigate pollution shutdowns &
+                                            drought.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-sky-600 mt-1">●</span>
+                                        <span><strong>Groundwater:</strong> Utilizing the 98% untapped potential
+                                            reliability.</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <h4 class="font-bold text-neutral text-lg mb-2">Tariff Reform</h4>
-                        <p class="text-sm text-gray-600">
-                            Implementing fair Tariff Setting Mechanisms (TSM) to enable water operators to fund
-                            continuous infrastructure upgrades.
-                        </p>
-                    </div>
 
-                    <!-- Strategy Card 4 -->
-                    <div
-                        class="col-span-1 md:col-span-2 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
-                        <div class="flex-shrink-0">
+                        <!-- 3. 12MP Big Bolds -->
+                        <div class="bg-indigo-50 rounded-2xl p-6 border border-indigo-100">
                             <div
-                                class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-green-600 shadow-sm">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="w-12 h-12 bg-indigo-200 rounded-xl flex items-center justify-center text-indigo-700 mb-4">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
                                     </path>
                                 </svg>
                             </div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-green-900 text-lg mb-1">Polluter Pays Principle</h4>
-                            <p class="text-sm text-green-800">
-                                Strict enforcement of environmental laws. Industrial polluters must bear the full cost
-                                of remediation, protecting our raw water sources from contamination events.
+                            <h4 class="font-bold text-neutral text-lg mb-2">12MP "Big Bolds"</h4>
+                            <p class="text-xs text-gray-600 mb-3">RM1.7 Billion allocated for sewerage modernization.
                             </p>
+                            <div class="bg-white p-3 rounded-lg border border-indigo-100 shadow-sm">
+                                <p class="text-xs font-bold text-indigo-800 mb-1">Data Center Policy</p>
+                                <p class="text-[10px] text-gray-500">Zero potable water for cooling by 2027. Mandating
+                                    recycled water use.</p>
+                            </div>
                         </div>
+
+                        <!-- 4. Tariff Reform & Polluter Pays -->
+                        <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Tariff Reform (Interactive) -->
+                            <div
+                                class="bg-gradient-to-br from-indigo-50 to-white border border-indigo-100 rounded-2xl p-6 group cursor-pointer hover:shadow-md transition-all relative overflow-hidden">
+                                <div
+                                    class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <span
+                                        class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">Explore</span>
+                                </div>
+                                <h4
+                                    class="font-bold text-indigo-900 text-lg mb-2 group-hover:text-indigo-700 transition-colors">
+                                    Tariff Reform (TSM)</h4>
+                                <p
+                                    class="text-xs text-gray-600 mb-3 group-hover:opacity-0 transition-opacity duration-300 absolute">
+                                    Moving towards full cost recovery to fund infrastructure upgrades.</p>
+                                <p
+                                    class="text-sm text-gray-600 mb-3 group-hover:opacity-0 transition-opacity duration-300">
+                                    Sustainable pricing ensures long-term service reliability.</p>
+
+                                <!-- Reveal Content -->
+                                <div
+                                    class="absolute inset-x-6 top-16 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                    <p class="text-xs text-indigo-800 leading-relaxed">
+                                        <strong>Why pay more?</strong><br>
+                                        Every RM1 increase funds <strong>pipe replacements</strong> that reduce the 37%
+                                        leaked water (NRW), eventually stabilizing costs.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Polluter Pays (Interactive) -->
+                            <div
+                                class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100 rounded-2xl p-6 group hover:shadow-md transition-all">
+                                <h4 class="font-bold text-green-900 text-lg mb-2">Polluter Pays Principle</h4>
+                                <p class="text-sm text-green-800 mb-2">Strict enforcement of environmental laws (WSIA).
+                                </p>
+                                <div
+                                    class="bg-white/60 rounded-lg p-3 text-xs text-green-900 mt-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <span class="font-bold text-red-600">⚠ Penalty:</span> Up to RM10 Million fine &
+                                    mandatory imprisonment for river pollution under WSIA Amendment 2024.
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+
+            <!-- End of Interactive Hub Content -->
         </div>
     </section>
 
+    <!-- Water Bill Calculator -->
+    <section class="py-24 bg-blue-50 relative overflow-hidden border-t border-blue-100">
 
-    <!-- NEW SECTION: Water Bill Calculator -->
-    <section class="py-12 bg-blue-50 relative overflow-hidden">
         <!-- Background decoration -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -ml-16 -mb-16"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -ml-16 -mb-16">
+        </div>
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-neutral mb-2">Estimate Your Monthly Bill</h2>
-                <p class="text-gray-600">Select your state and enter your usage to see the cost based on 2024 tariff
+                <p class="text-gray-600">Select your state and enter your usage to see the cost based on 2024
+                    tariff
                     rates.</p>
             </div>
 
@@ -451,7 +632,8 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Monthly Usage (m³)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Monthly Usage
+                                (m³)</label>
                             <input type="number" id="usageInput" placeholder="e.g. 30"
                                 class="w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 rounded-lg focus:outline-none focus:border-primary transition-colors">
                             <p class="text-xs text-gray-500 mt-1">Average household uses ~30-40 m³</p>
@@ -466,7 +648,8 @@
                     <!-- Result Display -->
                     <div
                         class="bg-gradient-to-br from-primary to-secondary rounded-xl p-6 text-white text-center flex flex-col justify-center h-full shadow-inner">
-                        <p class="text-blue-100 text-sm uppercase tracking-wider font-semibold mb-2">Estimated Total
+                        <p class="text-blue-100 text-sm uppercase tracking-wider font-semibold mb-2">Estimated
+                            Total
                         </p>
                         <div class="flex items-baseline justify-center gap-1">
                             <span class="text-2xl font-light">RM</span>
@@ -486,7 +669,8 @@
     <section id="directory" class="py-12 bg-neutral text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <span class="text-secondary font-medium tracking-wider uppercase text-sm">National Directory</span>
+                <span class="text-secondary font-medium tracking-wider uppercase text-sm">National
+                    Directory</span>
                 <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">Report Issues to Your Provider</h2>
                 <p class="text-gray-400 max-w-2xl mx-auto">
                     Directly contact the water authority in your state to report pipe bursts, discolorations, or
@@ -542,7 +726,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Johor
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Johor
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">Ranhill
                             SAJ</span>
@@ -584,7 +769,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Pulau
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Pulau
                             Pinang</h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">PBAPP</span>
                     </div>
@@ -625,7 +811,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Perak
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Perak
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">LAP</span>
                     </div>
@@ -666,7 +853,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Sabah
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Sabah
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">JANS</span>
                     </div>
@@ -708,7 +896,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Sarawak
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Sarawak
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">Talikhidmat</span>
                     </div>
@@ -749,7 +938,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Kedah
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Kedah
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">SADA</span>
                     </div>
@@ -790,7 +980,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Kelantan
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Kelantan
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">AKSB
                             (PINTAS)</span>
@@ -832,7 +1023,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Melaka
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Melaka
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">SAMB</span>
                     </div>
@@ -873,7 +1065,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Negeri
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Negeri
                             Sembilan</h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">SAINS</span>
                     </div>
@@ -914,7 +1107,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Pahang
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Pahang
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">PAIP</span>
                     </div>
@@ -996,7 +1190,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Perlis
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Perlis
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">Syarikat Air
                             Perlis</span>
@@ -1038,7 +1233,8 @@
                 <div
                     class="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors border border-gray-700 hover:border-primary group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Labuan
+                        <h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+                            Labuan
                         </h3>
                         <span class="text-xs font-mono text-gray-500 bg-gray-900 px-2 py-1 rounded">BBAL</span>
                     </div>
@@ -1079,11 +1275,10 @@
         </div>
     </section>
 
-    <footer class="bg-neutral text-white py-12 border-t border-gray-700 mt-auto">
+    <footer class="bg-neutral text-white py-12 border-t border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h3 class="text-xl font-bold mb-2">Water Analytics</h3>
-            <p class="text-sm text-gray-400">Promoting Sustainable Water Management</p>
-            <p class="text-xs text-gray-500 mt-4">© 2025 Water Analytics Dashboard</p>
+            <h3 class="text-xl font-bold mb-2">Airlytics</h3>
+            <p class="text-sm text-gray-400">Powered by Tableau & DOSM Data & SPAN</p>
         </div>
     </footer>
 
